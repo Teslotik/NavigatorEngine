@@ -24,14 +24,18 @@ protected:
     std::ifstream *stream = nullptr;    // @todo read/write
 
 public:
-    File(std::filesystem::path path) {
+    File(std::filesystem::path path, bool binary) {
         assert(std::filesystem::exists(path));
 
         stream = new std::ifstream();
         stream->exceptions(std::ifstream::badbit);
 
         try {
-            stream->open(path, std::ios::binary);
+            if (binary) {
+                stream->open(path, std::ios::binary);
+            } else {
+                stream->open(path);
+            }
         } catch (std::ifstream::failure &e) {
             std::cout << "[Error] Failed to load file stream: " << path << " Exception: " << e.what() << std::endl;
             delete stream;
@@ -75,7 +79,7 @@ public:
     Loader() = default;
     Loader(std::filesystem::path path);
 
-    File getFile(std::string label);
+    File getFile(std::string label, bool binary = false);
 
     // void open()  /// @todo requests permissions
 

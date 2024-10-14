@@ -33,11 +33,11 @@ Loader::Loader(std::filesystem::path path): path(path) {
     
 }
 
-File Loader::getFile(std::string label) {
+File Loader::getFile(std::string label, bool binary) {
     std::filesystem::path p = path / label;
     // cout << path << ", " << p << endl;
     // cout << std::filesystem::absolute(p) << std::filesystem::current_path() << endl;
-    return File(p);
+    return File(p, binary);
 }
 
 string Loader::text(std::string label) {
@@ -144,7 +144,7 @@ entity = Entity.Create('ActorEntity', 'test')
 */
 
 Image Loader::image(std::string label) {
-    File file = getFile(label);
+    File file = getFile(label, true);
     
     auto stream = file.getStream();
     stream->seekg(0, stream->end);
