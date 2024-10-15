@@ -46,5 +46,5 @@ target_link_libraries(engine ${OPENGL_LIBRARIES} glfw)
 add_custom_command(TARGET engine POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${CMAKE_SOURCE_DIR}/user"
-    "${CMAKE_BINARY_DIR}/user"
+    "$<TARGET_FILE_DIR:${PROJECT_NAME}>/user"
 )
